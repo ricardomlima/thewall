@@ -1,0 +1,9 @@
+version: '2'
+services:
+    api:
+        build: ./api
+        image: ricardomlima/thewall-api
+        volumes:
+            - ./api:/home
+        expose:
+            - "5000"
