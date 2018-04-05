@@ -6,4 +6,6 @@ services:
         volumes:
             - ./api:/home
         expose:
-            - "5000"
+            - "8000"
+        ports:
+            - "80:8000"
