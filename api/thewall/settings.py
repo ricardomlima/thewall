@@ -111,9 +111,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # Model used for user registering and authentication
 AUTH_USER_MODEL = 'user.WallUser'
 
-# Logins only allowed with email verification
+# Logins only allowed with email verification - allauth
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = True
+
+# Using custom adapter - allauth
+ACCOUNT_ADAPTER = 'user.v1.adapter.CustomAdapter'
 
 # For django-allauth
 SITE_ID = 1
