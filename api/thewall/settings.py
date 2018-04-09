@@ -37,7 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'rest_auth.registration',
+    'allauth',
+    'allauth.account',
+    'user',
     'wall',
 ]
 
@@ -101,6 +108,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Model used for user registering and authentication
+AUTH_USER_MODEL = 'user.WallUser'
+
+# Logins only allowed with email verification - allauth
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = True
+
+# Using custom adapter - allauth
+ACCOUNT_ADAPTER = 'user.v1.adapter.CustomAdapter'
+
+# For django-allauth
+SITE_ID = 1
+
+# Email sending
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
