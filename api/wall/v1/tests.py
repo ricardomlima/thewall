@@ -39,6 +39,9 @@ class PostTestCase(APITestCase):
         new_post = {'message':'new post message'}
 
         create_request = self.client.post(self.endpoint, new_post, format='json')
+
+        self.assertEqual(create_request.status_code, 201)
+
         response = self.client.get(self.endpoint)
 
         self.assertEqual(response.status_code, 200)
