@@ -18,13 +18,22 @@ class Post extends Component {
 }
 
 class Wall extends Component {
+
+  state = {
+    posts: [
+      {"author":"Ricardo Monteiro e Lima", "message":"one brick in the Wall"},
+      {"author":"Rafael Monteiro e Lima",  "message":"two bricks in the Wall"},
+      {"author":"Larissa Espindola",       "message":"three bricks in the Wall"},
+      {"author":"Larissa Capelari",        "message":"four bricks in the Wall"},
+    ]
+  }
+
   render(){
     return (
       <div className="Wall">
-        <Post author="Ricardo Monteiro e Lima" message="one brick in the wall"/>
-        <Post author="Rafael Monteiro e Lima"  message="two bricks in the wall"/>
-        <Post author="Larissa Espindola"       message="three brick in the wall"/>
-        <Post author="Larissa Capelari"        message="four bricks in the wall"/>
+        {this.state.posts.map(post => (
+          <Post author={post.author} message={post.message} />
+        ))}
       </div>
     )
   }
