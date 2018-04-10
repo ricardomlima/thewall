@@ -1,6 +1,7 @@
 from rest_framework.test import APITestCase, APIRequestFactory
 from model_mommy import mommy
 
+from user.models import WallUser
 from wall.models import Post
 
 
@@ -11,6 +12,7 @@ class PostTestCase(APITestCase):
     def setUp(self):
 
         self.post = mommy.make(Post)
+        self.user = mommy.make(WallUser)
     
     def test_list_posts(self):
         """
@@ -29,11 +31,31 @@ class PostTestCase(APITestCase):
     def test_create_post(self):
         """
         Test api post creation
+
+        Force authentication headers on request
         """
+
+        self.client.force_authenticate(user=self.user)
         new_post = {'message':'new post message'}
-        create_request = self.client.post(self.endpoint, new_post)
+
+        create_request = self.client.post(self.endpoint, new_post, format='json')
+
+        self.assertEqual(create_request.status_code, 201)
+
         response = self.client.get(self.endpoint)
 
         self.assertEqual(response.status_code, 200)
         json_result = response.json()
         self.assertEqual(json_result['count'], 2)
+
+    def test_create_post_not_authenticated(self):
+        """
+        Test api post creation without an authenticated user
+        """
+
+        new_post = {'message': 'another new post message'}
+
+        create_request = self.client.post(self.endpoint, new_post, format='json')
+
+        # checking for forbidden status code
+        self.assertEqual(create_request.status_code, 403)
