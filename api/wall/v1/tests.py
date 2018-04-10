@@ -47,3 +47,15 @@ class PostTestCase(APITestCase):
         self.assertEqual(response.status_code, 200)
         json_result = response.json()
         self.assertEqual(json_result['count'], 2)
+
+    def test_create_post_not_authenticated(self):
+        """
+        Test api post creation without an authenticated user
+        """
+
+        new_post = {'message': 'another new post message'}
+
+        create_request = self.client.post(self.endpoint, new_post, format='json')
+
+        # checking for forbidden status code
+        self.assertEqual(create_request.status_code, 403)
