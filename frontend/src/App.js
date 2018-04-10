@@ -19,13 +19,34 @@ class Post extends Component {
 
 class Wall extends Component {
 
-  state = {
-    posts: [
-      {"author":"Ricardo Monteiro e Lima", "message":"one brick in the Wall"},
-      {"author":"Rafael Monteiro e Lima",  "message":"two bricks in the Wall"},
-      {"author":"Larissa Espindola",       "message":"three bricks in the Wall"},
-      {"author":"Larissa Capelari",        "message":"four bricks in the Wall"},
-    ]
+  constructor(props) {
+    super(props)
+    this.state = {
+      error: null,
+      isLoaded: false,
+      posts: []
+    }
+  }
+
+  componentDidMount(){
+      fetch('http://localhost/api/v1/posts')
+      .then(res => res.json())
+      .then((result) => {
+
+        // Populating state with posts from backend
+        // server
+        this.setState({
+          isLoaded: true,
+          posts: result.results
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          })
+        })
+
+      })
   }
 
   render(){
