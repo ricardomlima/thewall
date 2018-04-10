@@ -53,7 +53,7 @@ class Wall extends Component {
     return (
       <div className="Wall">
         {this.state.posts.map(post => (
-          <Post author={post.author} message={post.message} />
+          <Post key={post.id} author={post.author} message={post.message} />
         ))}
       </div>
     )
