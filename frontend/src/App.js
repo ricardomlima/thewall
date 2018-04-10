@@ -6,11 +6,11 @@ class Post extends Component {
   render(){
     return (
       <div className="Post">
-        <div className="Author">
-          Ricardo M. Lima
-        </div>
+        <h2 className="Author">
+          {this.props.author}
+        </h2>
         <div className="Message">
-          Another brick in the wall
+          {this.props.message}
         </div>
       </div>
     )
@@ -21,10 +21,10 @@ class Wall extends Component {
   render(){
     return (
       <div className="Wall">
-        <Post />
-        <Post />
-        <Post />
-        <Post />
+        <Post author="Ricardo Monteiro e Lima" message="one brick in the wall"/>
+        <Post author="Rafael Monteiro e Lima"  message="two bricks in the wall"/>
+        <Post author="Larissa Espindola"       message="three brick in the wall"/>
+        <Post author="Larissa Capelari"        message="four bricks in the wall"/>
       </div>
     )
   }
