@@ -5,6 +5,13 @@ from wall.models import Post
 from .serializers import PostSerializer
 
 class PostView(generics.ListCreateAPIView):
+    """
+    get:
+    Returns a list of Posts
+
+    post:
+    Create a Post resource
+    """
     
     queryset = Post.objects.all()
     serializer_class = PostSerializer
