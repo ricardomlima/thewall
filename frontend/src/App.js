@@ -107,6 +107,18 @@ class Post extends Component {
   }
 }
 
+class PostForm extends Component {
+
+  render() {
+    return (
+      <form id='PostForm'>
+        <textarea className="PostForm"></textarea>
+        <button>Post to the Wall</button>
+      </form>
+    )
+  }
+}
+
 class Wall extends Component {
 
   constructor(props) {
@@ -142,6 +154,7 @@ class Wall extends Component {
   render(){
     return (
       <div className="Wall">
+        <PostForm />
         {this.state.posts.map(post => (
           <Post key={post.id} author={post.author} message={post.message} />
         ))}
