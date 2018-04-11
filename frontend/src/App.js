@@ -5,34 +5,63 @@ import './App.css';
 class AuthPanel extends Component {
   constructor(props){
     super()
-    this.handleAuthentication = this.handleAuthentication.bind(this)
+    this.state = {email:'', password:''}
+
+    this.handleRegistration = this.handleRegistration.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
+    this.handleEmailChange = this.handleEmailChange.bind(this)
+    this.handlePasswordChange = this.handlePasswordChange.bind(this)
   }
 
-  handleAuthentication(e){
+  handleRegistration(e){
     e.preventDefault()
-    const data = new FormData(e.target);
-    this.props.onAuthenticate(true)
+    const postData = {
+      email:this.state.email,
+      password1: this.state.password,
+      password2: this.state.password,
+    }
+
+    fetch('http://localhost/api/v1/auth/registration/', {
+      method:'POST',
+      body:JSON.stringify(postData),
+      headers: {'content-type': 'application/json'},
+      mode:'cors'
+    })
+    .then((res) => {
+      if(res.ok){
+        this.props.onAuthenticate(true)
+      }
+    })
   }
 
   handleLogout(){
     this.props.logout()
   }
 
+  handleEmailChange(e){
+    console.log(this.state)
+    this.setState({email: e.target.value})
+  }
+
+  handlePasswordChange(e){
+    console.log(this.state)
+    this.setState({password: e.target.value})
+  }
+
   render(){
     return (
       !this.props.loggedIn ? (
-      <form onSubmit={this.handleAuthentication}>
+      <form>
         <label>
           Username
-          <input type="text" name="username" id="username"/>
+          <input onChange={this.handleEmailChange} type="text" name="email" id="email"/>
         </label>
         <label>
           Password
-          <input type="text" name="username" id="username"/>
+          <input onChange={this.handlePasswordChange} type="password" name="password" id="password"/>
         </label>
         <button>Login</button>
-        <button>Register</button>
+        <button onClick={this.handleRegistration}>Register</button>
       </form>
       ) : (
         <div>
