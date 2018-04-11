@@ -60,12 +60,10 @@ class AuthPanel extends Component {
   }
 
   handleEmailChange(e){
-    console.log(this.state)
     this.setState({email: e.target.value})
   }
 
   handlePasswordChange(e){
-    console.log(this.state)
     this.setState({password: e.target.value})
   }
 
