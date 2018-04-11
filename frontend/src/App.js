@@ -127,17 +127,22 @@ class Post extends Component {
 
 class PostForm extends Component {
 
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
       message:''
     }
     this.handleChange = this.handleChange.bind(this)
     this.postMessage = this.postMessage.bind(this)
+    this.updatePosts = this.updatePosts.bind(this)
   }
 
   handleChange(e){
     this.setState({message:e.target.value})
+  }
+
+  updatePosts(posts){
+    this.props.onPostsUpdate(posts)
   }
 
   postMessage(e){
@@ -153,6 +158,12 @@ class PostForm extends Component {
       headers: headers,
       mode:'cors',
       credentials:'include'
+    }).then((res) => {
+       fetch('http://localhost/api/v1/posts')
+      .then(res => res.json())
+      .then((result) => {
+        this.updatePosts(result.results)
+      })
     })
   }
 
@@ -175,6 +186,11 @@ class Wall extends Component {
       isLoaded: false,
       posts: []
     }
+    this.setPosts = this.setPosts.bind(this)
+  }
+
+  setPosts(posts){
+    this.setState({posts:posts});
   }
 
   componentDidMount(){
@@ -201,7 +217,7 @@ class Wall extends Component {
   render(){
     return (
       <div className="Wall">
-        {this.props.loggedIn && <PostForm />}
+        {this.props.loggedIn && <PostForm onPostsUpdate={this.setPosts}/>}
         {this.state.posts.map(post => (
           <Post key={post.id} author={post.author} message={post.message} />
         ))}
