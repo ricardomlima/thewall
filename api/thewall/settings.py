@@ -126,7 +126,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USERNAME_REQUIRED = False
 
 # Using custom adapter - allauth
-ACCOUNT_ADAPTER = 'use.v1.adapter.CustomAdapter'
+ACCOUNT_ADAPTER = 'user.v1.adapter.CustomAdapter'
 
 # For django-allauth
 SITE_ID = 1
