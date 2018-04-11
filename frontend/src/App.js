@@ -20,7 +20,7 @@ function getCookie(name) {
 
 class AuthPanel extends Component {
   constructor(props){
-    super()
+    super(props)
     this.state = {email:'', password:''}
 
     this.handleAuthentication = this.handleAuthentication.bind(this)
@@ -28,6 +28,29 @@ class AuthPanel extends Component {
     this.handleLogout = this.handleLogout.bind(this)
     this.handleEmailChange = this.handleEmailChange.bind(this)
     this.handlePasswordChange = this.handlePasswordChange.bind(this)
+    this.auth = this.auth.bind(this)
+  }
+
+  componentDidMount(){
+    const headers = {'x-csrftoken':getCookie('csrftoken')}
+    fetch('http://localhost/api/v1/auth/user/',{
+      method:'GET',
+      credentials:'include',
+      mode:'cors',
+      headers:headers
+    })
+    .then((res) => {
+      if(res.ok){
+        res.text().then((text) => {
+          const credentials = JSON.parse(text)
+          this.auth(credentials.email, true)
+        })
+      }
+    })
+  }
+
+  auth(username, loggedIn){
+    this.props.onAuthenticate(username,loggedIn);
   }
 
   handleRegistration(e){
@@ -47,7 +70,7 @@ class AuthPanel extends Component {
     })
     .then((res) => {
       if(res.ok){
-        this.props.onAuthenticate(true)
+        this.auth(this.state.email, true)
       }
     })
   }
@@ -68,7 +91,7 @@ class AuthPanel extends Component {
     })
     .then((res) => {
       if(res.ok){
-        this.props.onAuthenticate(true)
+        this.auth(this.state.email, true)
       }
     })
   }
@@ -102,7 +125,7 @@ class AuthPanel extends Component {
       </form>
       ) : (
         <div>
-          <span>Hello User</span>
+          <span>Hello {this.props.username}</span>
           <button onClick={this.handleLogout}>logout</button>
         </div>
       )
@@ -233,8 +256,8 @@ class App extends Component {
     this.state = {loggedIn: false};
   }
 
-  updateAuth = (loggedIn) => {
-    this.setState({loggedIn:loggedIn})
+  updateAuth = (username, loggedIn) => {
+    this.setState({loggedIn:loggedIn, username:username})
   }
 
   logoutUser = () => {
@@ -257,6 +280,7 @@ class App extends Component {
       <div>
         <AuthPanel
             loggedIn={this.state.loggedIn}
+            username={this.state.username}
             logout={this.logoutUser}
             onAuthenticate={this.updateAuth} />
         <Wall loggedIn={this.state.loggedIn} />
