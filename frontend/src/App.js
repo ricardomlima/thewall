@@ -115,17 +115,31 @@ class PostForm extends Component {
       message:''
     }
     this.handleChange = this.handleChange.bind(this)
+    this.postMessage = this.postMessage.bind(this)
   }
 
   handleChange(e){
     this.setState({message:e.target.value})
   }
 
+  postMessage(e){
+    e.preventDefault()
+    const postData = JSON.stringify(this.state.message)
+    fetch('http://localhost/api/v1/posts', {
+      method:'POST',
+      body:postData,
+      headers: {'content-type': 'application/json'},
+      mode:'cors'
+    }).then((res) => {
+      console.log(res)
+    })
+  }
+
   render() {
     return (
       <form id='PostForm'>
         <textarea onChange={this.handleChange} className="PostForm"></textarea>
-        <button>Post to the Wall</button>
+        <button onClick={this.postMessage}>Post to the Wall</button>
       </form>
     )
   }
