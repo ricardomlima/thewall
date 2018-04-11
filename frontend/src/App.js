@@ -201,7 +201,7 @@ class Wall extends Component {
   render(){
     return (
       <div className="Wall">
-        <PostForm />
+        {this.props.loggedIn && <PostForm />}
         {this.state.posts.map(post => (
           <Post key={post.id} author={post.author} message={post.message} />
         ))}
@@ -222,7 +222,18 @@ class App extends Component {
   }
 
   logoutUser = () => {
-    this.setState({loggedIn:false})
+    const headers = {
+      'content-type': 'application/json',
+      'x-csrftoken':getCookie('csrftoken')
+    }
+    fetch('http://localhost/api/v1/auth/logout/', {
+      method:'POST',
+      credentials:'include',
+      headers:headers,
+      mode:'cors'
+    }).then((res) => {
+      this.setState({loggedIn:false})
+    })
   }
 
   render() {
