@@ -2,6 +2,22 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+function getCookie(name) {
+  if (!document.cookie) {
+    return null;
+  }
+
+  const xsrfCookies = document.cookie.split(';')
+    .map(c => c.trim())
+    .filter(c => c.startsWith(name + '='));
+
+  if (xsrfCookies.length === 0) {
+    return null;
+  }
+
+  return decodeURIComponent(xsrfCookies[0].split('=')[1]);
+}
+
 class AuthPanel extends Component {
   constructor(props){
     super()
@@ -26,7 +42,8 @@ class AuthPanel extends Component {
       method:'POST',
       body:JSON.stringify(postData),
       headers: {'content-type': 'application/json'},
-      mode:'cors'
+      mode:'cors',
+      credentials:'include'
     })
     .then((res) => {
       if(res.ok){
@@ -46,7 +63,8 @@ class AuthPanel extends Component {
       method:'POST',
       body:JSON.stringify(postData),
       headers: {'content-type': 'application/json'},
-      mode:'cors'
+      mode:'cors',
+      credentials:'include'
     })
     .then((res) => {
       if(res.ok){
@@ -124,14 +142,17 @@ class PostForm extends Component {
 
   postMessage(e){
     e.preventDefault()
-    const postData = JSON.stringify(this.state.message)
+    const headers = {
+      'content-type': 'application/json',
+      'x-csrftoken':getCookie('csrftoken')
+    }
+    const postData = JSON.stringify({message:this.state.message})
     fetch('http://localhost/api/v1/posts', {
       method:'POST',
       body:postData,
-      headers: {'content-type': 'application/json'},
-      mode:'cors'
-    }).then((res) => {
-      console.log(res)
+      headers: headers,
+      mode:'cors',
+      credentials:'include'
     })
   }
 
