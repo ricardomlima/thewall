@@ -109,10 +109,22 @@ class Post extends Component {
 
 class PostForm extends Component {
 
+  constructor(){
+    super()
+    this.state = {
+      message:''
+    }
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(e){
+    this.setState({message:e.target.value})
+  }
+
   render() {
     return (
       <form id='PostForm'>
-        <textarea className="PostForm"></textarea>
+        <textarea onChange={this.handleChange} className="PostForm"></textarea>
         <button>Post to the Wall</button>
       </form>
     )
