@@ -25,6 +25,6 @@ urlpatterns = [
     path('api/v1/docs/',  include_docs_urls(title='The Wall API V1')),
     path('api/', include('wall.urls')),
     path('api/', include('user.urls')),
-] + staticfiles_urlpatterns()
+]
 
 handler404 = 'thewall.v1.views.not_found'
