@@ -8,4 +8,4 @@ class WallUser(AbstractUser):
     name = models.CharField(blank=True, max_length=255)
 
     def __str__(self):
-        return self.name
+        return self.username

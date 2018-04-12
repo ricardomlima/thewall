@@ -4,7 +4,7 @@ from wall.models import Post
 
 class PostSerializer(serializers.ModelSerializer):
 
-    author = serializers.ReadOnlyField(source='author.name')
+    author = serializers.ReadOnlyField(source='author.username')
 
     class Meta:
         model = Post
