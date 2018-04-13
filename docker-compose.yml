@@ -4,6 +4,7 @@ services:
         image: ricardomlima/thewall-api
         volumes:
             - ./api:/home
+            - ./api/db.sqlite3:/home/db.sqlite3
         expose:
             - "8000"
         ports:
