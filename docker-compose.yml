@@ -1,0 +1,25 @@
+version: '2'
+services:
+    api:
+        image: ricardomlima/thewall-api
+        build: ./api/
+        volumes:
+            - ./api:/home
+        expose:
+            - "8000"
+        ports:
+            - "80:8000"
+        depends_on:
+            - db
+        command:
+            - ./run.sh
+    frontend:
+        image: ricardomlima/thewall-frontend
+        build: ./frontend/
+        volumes:
+            - ./frontend:/home
+            - /home/node_modules
+        ports:
+            - "3000:3000"
+    db:
+      image: postgres
