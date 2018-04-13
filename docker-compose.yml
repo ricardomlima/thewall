@@ -11,8 +11,7 @@ services:
             - "80:8000"
         depends_on:
             - db
-        command:
-            - ./run.sh
+        command: ["./wait-for-it.sh", "db:5432", "--", "./run.sh"]
     frontend:
         image: ricardomlima/thewall-frontend
         build: ./frontend/
