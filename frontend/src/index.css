@@ -8,8 +8,23 @@ body {
   font-family: sans-serif;
 }
 
-form button {
+button {
   margin-left:10px;
+}
+
+label {
+  margin-left:10px;
+}
+
+input {
+  margin-left:10px;
+}
+
+.AuthPanel {
+  background-color: #758257;
+  padding: 10px;
+  margin-bottom: 30px;
+  color:#FFF
 }
 
 .Wall {
@@ -33,8 +48,13 @@ form button {
   margin-bottom:40px;
 }
 
+.Wall .PostForm {
+  width: 80%;
+  height: 60px;
+}
+
 .Wall .Post .Author {
-  color: #31281b;
+  color: #3452ad;
   background-color: #bdaaaa;
   padding: 5px 5px 5px 15px;
   font-size:15px;

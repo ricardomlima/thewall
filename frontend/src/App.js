@@ -111,6 +111,7 @@ class AuthPanel extends Component {
   render(){
     return (
       !this.props.loggedIn ? (
+      <div className='AuthPanel'>
       <form>
         <label>
           Username
@@ -123,8 +124,9 @@ class AuthPanel extends Component {
         <button onClick={this.handleAuthentication}>Login</button>
         <button onClick={this.handleRegistration}>Register</button>
       </form>
+      </div>
       ) : (
-        <div>
+        <div className='AuthPanel'>
           <span>Hello {this.props.username}</span>
           <button onClick={this.handleLogout}>logout</button>
         </div>
@@ -279,6 +281,7 @@ class App extends Component {
     return (
       <div>
         <AuthPanel
+            className='AuthPanel'
             loggedIn={this.state.loggedIn}
             username={this.state.username}
             logout={this.logoutUser}
