@@ -114,7 +114,7 @@ class AuthPanel extends Component {
       <div className='AuthPanel'>
       <form>
         <label>
-          Username
+          Email
           <input onChange={this.handleEmailChange} type="text" name="email" id="email"/>
         </label>
         <label>
