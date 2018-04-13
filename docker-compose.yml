@@ -12,5 +12,6 @@ services:
         image: ricardomlima/thewall-frontend
         volumes:
             - ./frontend:/home
+            - /home/node_modules
         ports:
             - "3000:3000"
