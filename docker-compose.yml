@@ -2,6 +2,7 @@ version: '2'
 services:
     api:
         image: ricardomlima/thewall-api
+        build: ./api/
         volumes:
             - ./api:/home
         expose:
@@ -14,6 +15,7 @@ services:
             - ./run.sh
     frontend:
         image: ricardomlima/thewall-frontend
+        build: ./frontend/
         volumes:
             - ./frontend:/home
             - /home/node_modules
